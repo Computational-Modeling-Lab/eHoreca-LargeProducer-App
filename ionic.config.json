@@ -1,0 +1,7 @@
+{
+  "name": "eHoreca Large Producer App",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

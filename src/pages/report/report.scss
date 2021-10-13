@@ -1,0 +1,22 @@
+page-report
+{
+    ion-footer
+    {
+        background-color: white;
+    }
+
+    .center{
+        padding: 5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 75%;
+    }
+
+    ion-select
+    {
+      width: 100%;
+      max-width: unset;
+    }
+}

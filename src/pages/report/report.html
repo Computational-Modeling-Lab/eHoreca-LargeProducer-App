@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <img src="../../assets/gr-al-inter.png">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding center>
+
+  <p>Please provide the following information.</p>
+  <!-- $issue, $comment -->
+  <br>
+  <h4>Current Target Bin:<br>Bin #{{targetBin?.id}} / Type: {{targetBin?.type}}</h4>
+
+  <div *ngIf="targetBin && issue">
+    <ion-grid>
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Comment:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input placeholder="Add a comment here!" clearInput [(ngModel)]="comment"></ion-input>
+      </ion-col>
+    </ion-grid>
+    <br>
+  </div>
+
+  <div *ngIf="targetBin">
+    <ion-grid>
+      <!--Issue input-->
+      <ion-row style="background: #f1f1f1">
+        <ion-col col-4>
+          <ion-label fixed position="absolute">Issue:</ion-label>
+        </ion-col>
+        <ion-col color=grey>
+          <ion-item>
+            <ion-label fixed>Bin Issue</ion-label>
+            <ion-select interface="action-sheet" placeholder="Select One" [(ngModel)]="issue">
+              <ion-option value="bin full">
+                The bin is full
+              </ion-option>
+              <ion-option value="bin almost full">
+                The bin is almost full
+              </ion-option>
+              <ion-option value="bin damaged">
+                The bin is damaged
+              </ion-option>
+              <ion-option value="bin missing">
+                The bin is missing
+              </ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+  </div>
+
+  <div *ngIf="reportOwnBin">
+    <ion-grid>
+      <!--Bin input-->
+      <ion-row style="background: #f1f1f1">
+        <ion-col col-4>
+          <ion-label fixed position="absolute">Choose<br>a Bin:</ion-label>
+        </ion-col>
+        <ion-col color=grey>
+          <ion-select interface="action-sheet" (ionChange)="changeTarget(reportOwnBin)" placeholder="Select one" [(ngModel)]="ownBin">
+            <ion-option *ngFor="let bin of userBins let idx = index;" [value]="bin">
+              Bin #{{idx}} / Type: {{bin.type}}
+            </ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+  </div>
+
+  <ion-item>
+    <ion-label>Report Own Bin</ion-label>
+    <!-- <ion-toggle [(ngModel)]="reportOwnBin" (ionChange)="changeTarget(reportOwnBin)" color="primary"></ion-toggle> -->
+    <ion-toggle [(ngModel)]="reportOwnBin" color="primary" disabled></ion-toggle>
+  </ion-item>
+</ion-content>
+
+<ion-footer>
+  <!--This is the "Send Report" button.-->
+  <button ion-button color="primary" block round large [disabled]="(!issue && !targetBin)" (click)="sendReport()">
+    Send Report
+  </button>
+
+  <!--This is the "back" button.-->
+  <button ion-button color="primary" block round large (click)="back()">
+    Back to Home
+  </button>
+</ion-footer>

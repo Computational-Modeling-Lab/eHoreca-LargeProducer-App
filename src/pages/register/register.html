@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding center>
+
+  <div text-center>
+    <h3>Enter your information below to create your account:</h3>
+    <h4>Fields marked with (*) are required.</h4>
+  </div>
+
+  <br> <br>
+
+  <ion-grid>
+
+    <!--Name input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Name*:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="name" type="text" placeholder="your name" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!--Surname input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Surname*:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="surname" type="text" placeholder="your surname" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!--User name input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">User Name:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="userName" type="text" placeholder="your user name" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!--Email input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Email*:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="email" type="email" placeholder="your email" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!--Password input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Password*:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="password" type="password" placeholder="your password" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!--Role input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Choose<br>your Role:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-select interface="popover" placeholder="Select One" [(ngModel)]="role" (ionChange)="roleSelected()">
+          <ion-option value="w_producer">
+            Administration
+          </ion-option>
+          <ion-option value="w_producer_employee">
+            Employee
+          </ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <!--Company Name input-->
+    <ion-row *ngIf="role === 'w_producer'" style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Company<br>Name:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="companyName" type="text" placeholder="your company" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!--Company Name select-->
+    <ion-row *ngIf="role === 'w_producer_employee'" style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Companies<br>Available:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <!-- <ion-input [(ngModel)]="companyName" type="text" placeholder="your company" style="background: #eaeaea"></ion-input> -->
+        <ion-select interface="action-sheet" placeholder="Select your company" [(ngModel)]="targetCompany">
+          <ion-option *ngFor="let company of companies;" [value]="company.id">
+            {{company.title}}
+          </ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <!--Contact Phone input-->
+    <ion-row style="background: #f1f1f1" *ngIf="role === 'w_producer'">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Contact Phone:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="phone" type="tel" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!--Description input-->
+    <ion-row style="background: #f1f1f1" *ngIf="role === 'w_producer'">
+      <ion-col col-4>
+        <ion-label fixed position="absolute">Company<br>Description:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="description" type="text" placeholder="description" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!--Join Pin input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-4>
+        <ion-label fixed position="absolute" *ngIf="role === 'w_producer'">Create<br>Join Pin:</ion-label>
+        <ion-label fixed position="absolute" *ngIf="role === 'w_producer_employee'">Join<br>Pin:</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="pin" type="tel" placeholder="Join Pin" style="background: #eaeaea" maxlength="4"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!-- Location input -->
+    <ion-row *ngIf="role === 'w_producer'" style="background: #f1f1f1; height: 200px;">
+        <div class="map-wrapper">
+            <div #map id="map"></div>
+        </div>
+    </ion-row>
+    <ion-row *ngIf="role === 'w_producer'" style="background: #f1f1f1;">
+      <!-- Latitude Half -->
+      <ion-col>
+        <ion-row>
+          <ion-col col>Latitude:</ion-col><br>
+          <ion-col>{{loc_lat}}</ion-col>
+        </ion-row>
+      </ion-col>
+      <!-- Longitude Half -->
+      <ion-col>
+        <ion-row>
+          <ion-col col>Longitude:</ion-col><br>
+          <ion-col>{{loc_lng}}</ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <br>
+
+  </ion-grid>
+
+  <!--Error message-->
+  <!--Error message missing-->
+  <div *ngIf="isMissing === true" text-center>
+    <a ion-text color="danger"><br>You are missing required credentials.<br>Please fill in all fields with starts.</a>
+  </div>
+
+  <div *ngIf="isProblematic === true" text-center>
+    <a ion-text color="danger"><br>There was a problem with the account creation.<br>Please try again.</a>
+  </div>
+
+  <!--Error message login-->
+  <div *ngIf="error === true" text-center>
+    <a ion-text color="danger"><br>There was an error.<br>Please try again.</a>
+  </div>
+
+  <!--This is the "register" button.-->
+  <button ion-button color="primary" block round large (click)="register()">
+    Register
+  </button>
+
+  <!--This is the "back" button.-->
+  <button ion-button color="primary" block round large (click)="back()">
+    Back to Login
+  </button>
+
+</ion-content>

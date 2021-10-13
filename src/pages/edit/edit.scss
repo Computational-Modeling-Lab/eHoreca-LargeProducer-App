@@ -1,0 +1,39 @@
+page-edit
+{
+  ion-card-header
+  {
+    padding-left: 0 !important;
+  }
+
+  .options
+  {
+    justify-content: left;
+    right: 5%;
+    vertical-align: bottom !important;
+  }
+
+  .icon
+  {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    zoom: 3;
+  }
+
+  p
+  {
+    justify-content: center;
+    text-align: center;
+
+    a
+    {
+      font-size: 1em;
+      font-weight: bold;
+    }
+  }
+
+  ion-footer
+  {
+    background-color: white;
+  }
+}

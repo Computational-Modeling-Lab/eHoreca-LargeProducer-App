@@ -1,0 +1,49 @@
+page-bin-add-edit {
+  overflow: auto;
+
+  .center {
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 75%;
+  }
+
+  ion-select {
+    width: 100%;
+    max-width: unset;
+  }
+
+  .subtitle {
+    font-size: 66%;
+    margin: 0;
+    padding: 0 12px;
+  }
+
+  ion-footer {
+    background-color: white;
+  }
+
+  #map {
+    width: 100%;
+    height: 100%;
+  }
+
+  .map-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    #map_center {
+      position: absolute;
+      z-index: 99;
+      height: 40px;
+      width: 40px;
+      top: 50%;
+      left: 50%;
+      margin-left: -21px;
+      margin-top: -41px;
+    }
+  }
+}

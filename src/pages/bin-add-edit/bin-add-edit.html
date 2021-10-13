@@ -1,0 +1,104 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        <img src="../../assets/gr-al-inter.png">
+      </ion-title>
+      <p class="subtitle" *ngIf="caller === 'Add New'">Add New Bin</p>
+      <p class="subtitle" *ngIf="caller === 'Edit'">Edit a Bin</p>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding center>
+
+    <h3 *ngIf="caller === 'Add New'">Fill the information asked bellow. You must fill all the fields!</h3>
+    <h3 *ngIf="caller === 'Edit'">Fill only the fields you want to be changed. If a field is not filled, the current value won't change.</h3>
+
+    <ion-grid>
+
+        <!--Capacity input-->
+        <ion-row style="background: #f1f1f1">
+            <ion-col col-4>
+                <ion-label fixed position="absolute">Capacity:</ion-label>
+            </ion-col>
+            <ion-col color=grey>
+                <ion-input [(ngModel)]="capacity" type="number" clearInput [placeholder]="checkExist(cur_capacity, 'capacity')" style="background: #eaeaea"></ion-input>
+            </ion-col>
+            <ion-col color=grey>
+                <ion-input [(ngModel)]="capacity_unit" type="text" clearInput [placeholder]="checkExist(cur_capacity_unit, 'capacity_unit')" style="background: #eaeaea"></ion-input>
+            </ion-col>
+        </ion-row>
+
+        <!--Type input-->
+        <ion-row style="background: #f1f1f1">
+            <ion-col col-4>
+                <ion-label fixed position="absolute">Choose Type:</ion-label>
+            </ion-col>
+            <ion-col color=grey>
+                <ion-select interface="popover" [placeholder]="checkExist(cur_type, 'type')" [(ngModel)]="type">
+                    <ion-option value="compost">Compost</ion-option>
+                    <ion-option value="glass">Glass</ion-option>
+                    <ion-option value="recyclable">Recyclable</ion-option>
+                    <ion-option value="mixed">Mixed</ion-option>
+                    <ion-option value="metal">Metal</ion-option>
+                    <ion-option value="paper">Paper</ion-option>
+                    <ion-option value="plastic">Plastic</ion-option>
+                </ion-select>
+            </ion-col>
+        </ion-row>
+
+        <!--Quantity input-->
+        <ion-row style="background: #f1f1f1">
+            <ion-col col-4>
+                <ion-label fixed position="absolute">Bin Quantity:</ion-label>
+            </ion-col>
+            <ion-col color=grey>
+                <ion-input [(ngModel)]="quantity" type="number" clearInput [placeholder]="checkExist(cur_quantity, 'quantity')" style="background: #eaeaea"></ion-input>
+            </ion-col>
+        </ion-row>
+
+        <!--Description input-->
+        <ion-row style="background: #f1f1f1">
+            <ion-col col-4>
+                <ion-label fixed position="absolute">Description:</ion-label>
+            </ion-col>
+            <ion-col color=grey>
+                <ion-input [(ngModel)]="description" type="text" clearInput [placeholder]="checkExist(cur_description, 'description')" style="background: #eaeaea"></ion-input>
+            </ion-col>
+        </ion-row>
+
+        <ion-row style="background: #f1f1f1; height: 200px;">
+            <div class="map-wrapper">
+                <div #map id="map"></div>
+            </div>
+        </ion-row>
+        <ion-row style="background: #f1f1f1;">
+            <!-- Latitude Half -->
+            <ion-col>
+                <ion-row>
+                    <ion-col col-4>Lat: </ion-col>
+                    <ion-col>{{cur_loc_lat}}</ion-col>
+                </ion-row>
+            </ion-col>
+            <!-- Longitude Half -->
+            <ion-col>
+                <ion-row>
+                    <ion-col col-4>Lng: </ion-col>
+                    <ion-col>{{cur_loc_lng}}</ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <!--This is the "Upload" button.-->
+  <button ion-button color="primary" block round large (click)="dismissModal()">
+    Confirm
+  </button>
+
+  <!--This is the "Cancel" button.-->
+  <button ion-button color="primary" block round large (click)="cancel()">
+    Cancel
+  </button>
+</ion-footer>

@@ -1,0 +1,13 @@
+{
+  "name": "e-Horeca Public User App",
+  "short_name": "Public-User-App",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/initialLogo/horecal_logo_simple.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "background_color": "#ffffff",
+  "theme_color": "#4e8ef7"
+}

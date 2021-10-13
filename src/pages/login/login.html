@@ -1,0 +1,61 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding center>
+
+  <ion-grid>
+
+    <!--User name input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-3>
+        <ion-label fixed position="absolute">E-mail</ion-label>
+      </ion-col>
+      <ion-col color=grey>
+        <ion-input [(ngModel)]="email" type="email" placeholder="your@email.com" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <br>
+
+    <!--Password input-->
+    <ion-row style="background: #f1f1f1">
+      <ion-col col-3>
+        <ion-label fixed position="absolute">Password</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-input [(ngModel)]="password" type="password" placeholder="your password" style="background: #eaeaea"></ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <!--Error message-->
+  <div *ngIf="willLogin === false" text-center>
+    <a ion-text color="danger"><br>Wrong e-mail or password.<br>Please try again.</a>
+  </div>
+
+  <br> <br> <br>
+
+  <!--This is the "login" button.-->
+  <button ion-button color="primary" block round large
+    (click)="login()">
+    Login
+  </button>
+
+  <br>
+
+  <!--This is the "register" button.-->
+  <button ion-button color="primary" block round large
+    (click)="register()">
+    Create Account
+  </button>
+</ion-content>

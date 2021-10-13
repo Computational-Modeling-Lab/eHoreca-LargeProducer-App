@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <img src="../../assets/gr-al-inter.png">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding center>
+  <div *ngIf="gotBins; else noBins">
+    <ion-card *ngFor="let bin of userBins let idx=index;">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-11 (click)="edit(bin)">
+            <ion-card-header>
+              <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
+              <ion-card-title>Bin #{{idx + 1}} / Type: {{bin.type.charAt(0).toUpperCase() + bin.type.slice(1)}}</ion-card-title>
+            </ion-card-header>
+          </ion-col>
+
+          <ion-col col-1 class="options" (click)="trash(bin.id)">
+            <ion-icon class="icon" name="trash"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <!--This is the "Add new Bin" button.-->
+  <button ion-button color="primary" block round large (click)="addNew()">
+    Add new Bin
+  </button>
+
+  <!--This is the "back" button.-->
+  <button ion-button color="primary" block round large (click)="back()">
+    Back to Home
+  </button>
+</ion-footer>
+
+<ng-template #noBins>
+  <p>
+    <a>
+      You do not have any bins registered.
+      <br>
+      Click on "Add new Bin" to get started!
+    </a>
+  </p>
+</ng-template>
