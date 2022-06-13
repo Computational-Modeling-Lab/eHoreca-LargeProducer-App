@@ -66,7 +66,7 @@
         <ion-col color=grey>
           <ion-select interface="action-sheet" (ionChange)="changeTarget(reportOwnBin)" placeholder="Select one" [(ngModel)]="ownBin">
             <ion-option *ngFor="let bin of userBins let idx = index;" [value]="bin">
-              Bin #{{idx}} / Type: {{bin.type}}
+              Bin #{{idx}} / Type: {{bin?.type}}
             </ion-option>
           </ion-select>
         </ion-col>

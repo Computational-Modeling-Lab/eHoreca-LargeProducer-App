@@ -1,13 +1,13 @@
-import { Component, ViewChild, ElementRef }   from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
-import { HTTP as HttpClient }                 from "@ionic-native/http/ngx";
-import { Storage }                            from '@ionic/storage';
-import { Geolocation }                        from '@ionic-native/geolocation/ngx';
-import { UniqueDeviceID }                     from '@ionic-native/unique-device-id/ngx';
-import { LoadingController }                  from 'ionic-angular';
+import { HTTP as HttpClient } from "@ionic-native/http/ngx";
+import { Storage } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { LoadingController } from 'ionic-angular';
 
-import { LandingPage }                        from './../landing/landing';
-import { LoginPage }                          from './../login/login';
+import { LandingPage } from './../landing/landing';
+import { LoginPage } from './../login/login';
 
 import { ConstantsProvider } from '../../providers/constants/constants';
 
@@ -17,8 +17,7 @@ declare var google;
   selector: 'page-register',
   templateUrl: 'register.html',
 })
-export class RegisterPage
-{
+export class RegisterPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   marker: any;
@@ -38,7 +37,7 @@ export class RegisterPage
   name: string = "";
   surname: string = "";
   userName: any = "";
-	email: string = "";
+  email: string = "";
   password: string = "";
   role: string = "";
   pin: number;
@@ -47,28 +46,26 @@ export class RegisterPage
 
   url: string;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public http: HttpClient,
-              public geolocation: Geolocation,
-              public platform: Platform,
-              public storage: Storage,
-              public UDID: UniqueDeviceID,
-              public loadingctrl: LoadingController,
-              public constants: ConstantsProvider)
-  {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public http: HttpClient,
+    public geolocation: Geolocation,
+    public platform: Platform,
+    public storage: Storage,
+    public UDID: UniqueDeviceID,
+    public loadingctrl: LoadingController,
+    public constants: ConstantsProvider) {
     this.url = this.constants.getUrl();
 
-    this.platform.ready().then(() =>
-    {
-      this.geolocation.getCurrentPosition().then(res =>
-      {
+    this.platform.ready().then(() => {
+      this.geolocation.getCurrentPosition().then(res => {
         this.loc_lat = res.coords.latitude
         this.loc_lng = res.coords.longitude
       })
     });
 
-    const loading = this.loadingctrl.create({content: "Loading data...<br>Please wait..."});
+    const loading = this.loadingctrl.create({ content: "Loading data...<br>Please wait...", duration: 5000 });
     loading.present();
 
     this.http.get(
@@ -79,94 +76,85 @@ export class RegisterPage
         'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
         'Content-Type': 'application/json'
       }
-    ).then((data: any) =>
-      {
-        loading.dismiss();
+    ).then((data: any) => {
+      loading.dismiss();
 
-        data = JSON.parse(data.data);
+      data = JSON.parse(data.data);
 
-        this.companies = data.results;
+      this.companies = data.results;
     }
-    ).catch(err =>
-      {
-        loading.dismiss();
-        console.error(JSON.stringify(err));
-      }
+    ).catch(err => {
+      loading.dismiss();
+      console.error(JSON.stringify(err));
+    }
     );
   }
 
-  roleSelected()
-  {
+  roleSelected() {
     if (this.role === "w_producer")
-    setTimeout(
-      () =>
-      {
-        const latLng = new google.maps.LatLng(this.loc_lat, this.loc_lng);
+      setTimeout(
+        () => {
+          const latLng = new google.maps.LatLng(this.loc_lat, this.loc_lng);
 
-        const mapOptions =
-        {
-          center: latLng,
-          zoom: 14,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          zoomControl: true,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          rotateControl: false,
-          fullscreenControl: false
-        }
+          const mapOptions =
+          {
+            center: latLng,
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            zoomControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            rotateControl: false,
+            fullscreenControl: false
+          }
 
-        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+          this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-        this.marker = new google.maps.Marker(
-        {
-          position: latLng,
-          title: "Company Location!"
-        })
-        this.marker.setMap(this.map)
-        this.map.addListener('click', (event) => { this.placeMarker(event.latLng); })
-      }, 500
-    );
+          this.marker = new google.maps.Marker(
+            {
+              position: latLng,
+              title: "Company Location!"
+            })
+          this.marker.setMap(this.map)
+          this.map.addListener('click', (event) => { this.placeMarker(event.latLng); })
+        }, 500
+      );
   }
 
-  placeMarker(location)
-  {
+  placeMarker(location) {
     this.marker.setMap(null);
 
     this.marker = new google.maps.Marker(
-    {
-      position: location,
-      title: "Bin Location!"
-    })
+      {
+        position: location,
+        title: "Bin Location!"
+      })
     this.marker.setMap(this.map);
 
     this.loc_lat = location.lat()
     this.loc_lng = location.lng()
   }
 
-  async register()
-  {
-    if (!this.name || !this.surname || !this.email || !this.password)
-    {
+  async register() {
+    if (!this.name || !this.surname || !this.email || !this.password) {
       this.isMissing = true;
       return;
     }
 
-    if (!this.userName)
-    {
+    if (!this.userName) {
       // if (this.UDID.get())
       //   this.UDID.get().then((udid: any) => { this.userName = Md5.hashStr(udid.toString()) })
       // else
-        this.userName = `${this.name} ${this.surname}`;
+      this.userName = `${this.name} ${this.surname}`;
     }
 
-    const loading = this.loadingctrl.create({content: "Registering...<br>Please wait..."});
+    const loading = this.loadingctrl.create({ content: "Registering...<br>Please wait..." });
     await loading.present();
 
     if (this.role === "w_producer") // employer
     {
-      if (!this.companyName || !this.phone || !this.description || !this.pin || !this.loc_lat || !this.loc_lng)
-      {
+      if (!this.companyName || !this.phone || !this.description || !this.pin || !this.loc_lat || !this.loc_lng) {
         loading.dismiss();
         this.isMissing = true;
         console.log(JSON.stringify([this.companyName, this.phone, this.description, this.pin, this.loc_lat, this.loc_lng]));
@@ -193,22 +181,20 @@ export class RegisterPage
           'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
           'Content-Type': 'application/json'
         }
-      ).then(data =>
-        {
-          this.login(loading);
-        }
-      ).catch(err =>
-        {
-          loading.dismiss();
-          this.isProblematic = true;
-          console.error(JSON.stringify(err));
-        }
+      ).then(data => {
+        console.log('register data:', data);
+        this.login(loading);
+      }
+      ).catch(err => {
+        loading.dismiss();
+        this.isProblematic = true;
+        console.error('register error',err);
+      }
       );
     }
     else  // employee
     {
-      if (!this.targetCompany)
-      {
+      if (!this.targetCompany) {
         this.isMissing = true;
         return;
       }
@@ -230,22 +216,20 @@ export class RegisterPage
           'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
           'Content-Type': 'application/json'
         }
-      ).then(data =>
-        {
-          this.login(loading);
-        }
-      ).catch(err =>
-        {
-          loading.dismiss();
-          this.error = true;
-          console.error(JSON.stringify(err));
-        }
+      ).then(data => {
+        console.log('employee data:', data);
+        this.login(loading);
+      }
+      ).catch(err => {
+        loading.dismiss();
+        this.error = true;
+        console.error('register error', err);
+      }
       );
     }
   }
 
-  login(loading)
-  {
+  login(loading) {
     this.http.post(
       `${this.url}/login`,
       {
@@ -257,45 +241,41 @@ export class RegisterPage
         'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
         'Content-Type': 'application/json'
       }
-    ).then((data: any) =>
-      {
-        loading.dismiss();
+    ).then((data: any) => {
+      console.log('data:', data);
+      loading.dismiss();
 
-        data = JSON.parse(data.data);
+      const parsed = JSON.parse(data.data)
+      console.log('parsed:', parsed);
+      this.storage.set("token", parsed.token);
+      this.storage.set("user_id", parsed.id);
+      this.storage.set('email', this.email);
+      this.storage.set('password', this.password);
 
-        this.storage.set('token', data.token);
-        this.storage.set('user_id', data.id);
-        this.storage.set('email', this.email);
-        this.storage.set('password', this.password);
-
-        this.http.get(
-          `${this.url}/w_producers/from_user_id/${data.id}`,
-          {},
-          {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
-            'Content-Type': 'application/json'
-          }
-        ).then((data: any) =>
-          {
-            data = JSON.parse(data.data);
-
-            this.storage.set('w_prod', JSON.stringify(data.data[0]));
-            this.navCtrl.setRoot(LandingPage);
-          }
-        ).catch(err =>
-          {
-            this.error = true;
-            console.error(JSON.stringify(err));
-          }
-        )
+      this.http.get(
+        `${this.url}/w_producers/from_user_id/${parsed.id}`,
+        {},
+        {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+          'Content-Type': 'application/json'
+        }
+      ).then(async (data: any) => {
+        console.log('w_prod:', data);
+        this.storage.set('w_prod', data.data);
+        await this.navCtrl.setRoot(LandingPage);
       }
-    ).catch(err =>
-      {
-        loading.dismiss();
+      ).catch(err => {
         this.error = true;
         console.error(JSON.stringify(err));
       }
+      )
+    }
+    ).catch(err => {
+      loading.dismiss();
+      this.error = true;
+      console.error('login error', err);
+    }
     );
   }
 

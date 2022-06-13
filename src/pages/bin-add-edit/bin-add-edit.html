@@ -24,7 +24,14 @@
                 <ion-input [(ngModel)]="capacity" type="number" clearInput [placeholder]="checkExist(cur_capacity, 'capacity')" style="background: #eaeaea"></ion-input>
             </ion-col>
             <ion-col color=grey>
-                <ion-input [(ngModel)]="capacity_unit" type="text" clearInput [placeholder]="checkExist(cur_capacity_unit, 'capacity_unit')" style="background: #eaeaea"></ion-input>
+                <ion-select interface="popover" [placeholder]="checkExist(cur_capacity_unit, 'capacity_unit')" [(ngModel)]="capacity_unit" style="background: #eaeaea">
+                    <ion-option value="Litre">
+                      Litre
+                    </ion-option>
+                    <ion-option value="Kilos">
+                      Kilos
+                    </ion-option>
+                </ion-select>
             </ion-col>
         </ion-row>
 
@@ -49,7 +56,7 @@
         <!--Quantity input-->
         <ion-row style="background: #f1f1f1">
             <ion-col col-4>
-                <ion-label fixed position="absolute">Bin Quantity:</ion-label>
+                <ion-label fixed position="absolute">Number of bins:</ion-label>
             </ion-col>
             <ion-col color=grey>
                 <ion-input [(ngModel)]="quantity" type="number" clearInput [placeholder]="checkExist(cur_quantity, 'quantity')" style="background: #eaeaea"></ion-input>

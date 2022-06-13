@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 /*
   Generated class for the ConstantsProvider provider.
@@ -7,12 +7,10 @@ import { Injectable } from '@angular/core';
   and Angular DI.
 */
 @Injectable()
-export class ConstantsProvider
-{
+export class ConstantsProvider {
   url: string = "https://ehoreca.cmodlab-iu.edu.gr/api";
 
-  public getUrl()
-  {
+  public getUrl() {
     return this.url;
   }
 }

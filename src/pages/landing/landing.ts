@@ -26,7 +26,7 @@ export class LandingPage
   {
     this.platform.ready().then(() =>
     {
-      this.geolocation.getCurrentPosition()
+      this.geolocation.getCurrentPosition();
     })
   }
 
